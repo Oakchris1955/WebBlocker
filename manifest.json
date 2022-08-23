@@ -1,0 +1,19 @@
+{
+	"name" : "WebBlocker",
+	"version": "0.1",
+	"description": "A simple extension to block certain websites",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"permissions": [
+		"tabs",
+		"storage",
+		"notifications",
+		"declarativeNetRequest",
+		"webRequest"
+	]
+}
