@@ -2,7 +2,7 @@
 chrome.tabs.onUpdated.addListener(
 	function (tabId, changeInfo, tab) {
 		// Load banned websites object from localStorage
-		chrome.storage.local.get(null, function(items) {
+		chrome.storage.local.get("blocked_websites", function(items) {
 			/*console.log(items);
 			let jsonString = function() {
 				if (Object.keys(items).length === 0) {
@@ -21,7 +21,7 @@ chrome.tabs.onUpdated.addListener(
 				}
 			};*/
 			// If items.blocked_websites is undefined, return an empty array
-			let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
+			let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
 			console.log("Blocked websites: "+blocked_websites);
 			console.log("Current tab ID: "+tabId);
 			console.log("Current tab URL: "+tab.url);
