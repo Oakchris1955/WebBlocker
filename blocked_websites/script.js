@@ -9,6 +9,10 @@ for (let button of buttons) {
 }
 loadTable();
 
+function showInputResultMessage(msg) {
+	document.getElementById("input_result").innerHTML = msg;
+}
+
 function isValidWebsiteName(website) {
 	// The function returning "true" doesn't mean the domain name entered is 100% correct
 	let domain_array = website.split(".").filter(function(entry) {return entry.trim() != '';});
@@ -24,26 +28,32 @@ function blockWebsite(_evt) {
 		let user_input = document.getElementById("input_url").value;
 		let blocked_websites = items.blocked_websites;
 		// Begin by check if user input is valid and if already in localStorage
-		if (isValidWebsiteName(user_input) && !blocked_websites.includes(user_input)) {
-			// If not, proceed
-			console.log("Website to block: "+user_input);
-			// Then, read the "blocked_websites" Array
-			if (typeof blocked_websites == "undefined") {
-				// If nothing is defined, make a new Array with the user_input
-				blocked_websites = [user_input]
+		if (isValidWebsiteName(user_input)) {
+			if (!blocked_websites.includes(user_input)) {
+				// If not, proceed
+				console.log("Website to block: "+user_input);
+				// Then, read the "blocked_websites" Array
+				if (typeof blocked_websites == "undefined") {
+					// If nothing is defined, make a new Array with the user_input
+					blocked_websites = [user_input]
+				} else {
+					// Else, push the user_input to the blocked_websites
+					blocked_websites.push(user_input);
+				}
+				console.log("New blocked websites: "+blocked_websites);
+				// Lastly, save them to localStorage, update the table and show a message
+				chrome.storage.local.set({
+					"blocked_websites": blocked_websites
+				});
+				loadTable();
+				showInputResultMessage(`Website ${user_input} succesfully blocked`);
 			} else {
-				// Else, push the user_input to the blocked_websites
-				blocked_websites.push(user_input);
+				showInputResultMessage(`Website "${user_input}" is already blocked`);
 			}
-			console.log("New blocked websites: "+blocked_websites);
-			// Lastly, save them to localStorage and update the table
-			chrome.storage.local.set({
-				"blocked_websites": blocked_websites
-			});
-			loadTable();
 		} else {
 			// Else, print a message
 			console.log("Nothing to block");
+			showInputResultMessage(`Website "${user_input}" is not valid`);
 		}
 	});
 }
