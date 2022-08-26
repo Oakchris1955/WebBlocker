@@ -3,23 +3,6 @@ chrome.tabs.onUpdated.addListener(
 	function (tabId, changeInfo, tab) {
 		// Load banned websites object from localStorage
 		chrome.storage.local.get("blocked_websites", function(items) {
-			/*console.log(items);
-			let jsonString = function() {
-				if (Object.keys(items).length === 0) {
-					return "{}"
-				} else {
-					return items.WebBlocker
-				}
-			}();
-			console.log(jsonString);
-			let blocked_websites = function() {
-				let parsed_json = JSON.parse(jsonString);
-				if (typeof parsed_json.blocked_websites === "undefined") {
-					return []
-				} else {
-					return parsed_json.blocked_websites
-				}
-			};*/
 			// If items.blocked_websites is undefined, return an empty array
 			let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
 			console.log("Blocked websites: "+blocked_websites);
@@ -66,36 +49,9 @@ chrome.tabs.onUpdated.addListener(
 					}
 				});
 			}
-			/*
-			if (Object.entries(items).length === 0) {
-				chrome.runtime.sendMessage(
-					items.WebBlocker, function(response) {}
-				);
-				console.log("problem");
-			} else {
-				chrome.runtime.sendMessage(
-					"{}", function(response) {}
-				);
-				console.log("ahm");
-			};*/
 		});
-		/*console.log(jsonString);
-		let jsonObject = JSON.parse(jsonString);
-		if (tab.url in jsonObject["blocked_websites"]) {
-			chrome.tabs.remove(tabId);
-		}*/
 	}
 );
-
-/*chrome.runtime.onMessage.addListener(
-	function(jsonString, _sender, _sendResponse) {
-		console.log(jsonString);
-		let jsonObject = JSON.parse(jsonString);
-		if (tab.url in jsonObject["blocked_websites"]) {
-			chrome.tabs.remove(tabId);
-		}
-	}
-)*/
 
 chrome.runtime.onStartup.addListener(
 	function () {

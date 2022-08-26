@@ -115,26 +115,19 @@ function openTab(evt) {
 	let toshowTabId = evt.target.id.slice(7);
 	let toshowTab = document.getElementById(toshowTabId);
 
-	/*if (toshowTab) {*/
-		let visible_tabs = document.getElementsByClassName("visible_tab");
-		let button_is_active = evt.target.className.endsWith("active");
-		for (let visible_tab of visible_tabs) {
-			visible_tab.className = "hidden_tab";
-		}
+	let visible_tabs = document.getElementsByClassName("visible_tab");
+	let button_is_active = evt.target.className.endsWith("active");
+	for (let visible_tab of visible_tabs) {
+		visible_tab.className = "hidden_tab";
+	}
 
-		let tabbuttons = document.getElementsByClassName("tabbutton");
-		for (let tabbutton of tabbuttons) {
-			tabbutton.className = tabbutton.className.replace(" active", "");
-		}
+	let tabbuttons = document.getElementsByClassName("tabbutton");
+	for (let tabbutton of tabbuttons) {
+		tabbutton.className = tabbutton.className.replace(" active", "");
+	}
 
-		if (!button_is_active) {
-			toshowTab.className = "visible_tab";
-			evt.target.className += " active";
-		}
-	/*}*/
-	/*let hidden_tabs = document.getElementsByClassName("hidden_tab");
-	for (let i = 0; i < hidden_tabs.length; i++) {
-		hidden_tabs[i].className = "visible_tab";
-	}*/
-	//document.getElementById(tabName).className = "visible_tab";
+	if (!button_is_active) {
+		toshowTab.className = "visible_tab";
+		evt.target.className += " active";
+	}
 }
