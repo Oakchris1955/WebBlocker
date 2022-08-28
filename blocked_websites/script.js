@@ -28,7 +28,6 @@ function blockWebsite(_evt) {
 		let user_input = document.getElementById("input_url").value;
 		let blocked_websites = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
-		console.log(user_input.length);
 		if (user_input.length) {
 			if (isValidWebsiteName(user_input)) {
 				if (!blocked_websites.includes(user_input)) {
