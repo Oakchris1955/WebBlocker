@@ -33,7 +33,7 @@ function blockWebsite(_evt) {
 			if (isValidWebsiteName(user_input)) {
 				if (!blocked_websites.includes(user_input)) {
 					// If not, proceed
-					console.log("Website to block: "+user_input);
+					console.log(`Website to block: ${user_input}`);
 					// Then, read the "blocked_websites" Array
 					if (typeof blocked_websites == "undefined") {
 						// If nothing is defined, make a new Array with the user_input
@@ -42,7 +42,7 @@ function blockWebsite(_evt) {
 						// Else, push the user_input to the blocked_websites
 						blocked_websites.push(user_input);
 					}
-					console.log("New blocked websites: "+blocked_websites);
+					console.log(`New blocked websites: ${blocked_websites}`);
 					// Lastly, save them to localStorage, update the table and show a message
 					chrome.storage.local.set({
 						"blocked_websites": blocked_websites
