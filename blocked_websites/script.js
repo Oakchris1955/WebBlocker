@@ -27,33 +27,38 @@ function blockWebsite(_evt) {
 		// Begin by getting the user input
 		let user_input = document.getElementById("input_url").value;
 		let blocked_websites = items.blocked_websites;
-		// Begin by check if user input is valid and if already in localStorage
-		if (isValidWebsiteName(user_input)) {
-			if (!blocked_websites.includes(user_input)) {
-				// If not, proceed
-				console.log("Website to block: "+user_input);
-				// Then, read the "blocked_websites" Array
-				if (typeof blocked_websites == "undefined") {
-					// If nothing is defined, make a new Array with the user_input
-					blocked_websites = [user_input]
+		// Begin by checking if user_input is empty, then if valid and if already in localStorage
+		console.log(user_input.length);
+		if (user_input.length) {
+			if (isValidWebsiteName(user_input)) {
+				if (!blocked_websites.includes(user_input)) {
+					// If not, proceed
+					console.log("Website to block: "+user_input);
+					// Then, read the "blocked_websites" Array
+					if (typeof blocked_websites == "undefined") {
+						// If nothing is defined, make a new Array with the user_input
+						blocked_websites = [user_input]
+					} else {
+						// Else, push the user_input to the blocked_websites
+						blocked_websites.push(user_input);
+					}
+					console.log("New blocked websites: "+blocked_websites);
+					// Lastly, save them to localStorage, update the table and show a message
+					chrome.storage.local.set({
+						"blocked_websites": blocked_websites
+					});
+					loadTable();
+					showInputResultMessage(`Website ${user_input} succesfully blocked`);
 				} else {
-					// Else, push the user_input to the blocked_websites
-					blocked_websites.push(user_input);
+					showInputResultMessage(`Website "${user_input}" is already blocked`);
 				}
-				console.log("New blocked websites: "+blocked_websites);
-				// Lastly, save them to localStorage, update the table and show a message
-				chrome.storage.local.set({
-					"blocked_websites": blocked_websites
-				});
-				loadTable();
-				showInputResultMessage(`Website ${user_input} succesfully blocked`);
 			} else {
-				showInputResultMessage(`Website "${user_input}" is already blocked`);
+				// Else, print a message
+				console.log("Nothing to block");
+				showInputResultMessage(`Website "${user_input}" is not valid`);
 			}
 		} else {
-			// Else, print a message
-			console.log("Nothing to block");
-			showInputResultMessage(`Website "${user_input}" is not valid`);
+			showInputResultMessage(`Expected non-empty user input`);
 		}
 	});
 }
