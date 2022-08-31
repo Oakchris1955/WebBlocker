@@ -25,7 +25,7 @@ function isValidWebsiteName(website) {
 function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
-		let user_input = document.getElementById("input_url").value;
+		let user_input = document.getElementById("url_input").value;
 		let blocked_websites = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
@@ -47,7 +47,7 @@ function blockWebsite(_evt) {
 						"blocked_websites": blocked_websites
 					});
 					loadTable();
-					showInputResultMessage(`Website ${user_input} succesfully blocked`);
+					showInputResultMessage(`Website "${user_input}" succesfully blocked`);
 				} else {
 					showInputResultMessage(`Website "${user_input}" is already blocked`);
 				}

@@ -9,8 +9,30 @@
 	font-size: 16;
 }*/
 
+#block_button {
+	border: none;
+	width: 8%;
+	height: 3%;
+	font-size: 1.2em;
+	border-radius: 5px;
+	background-color: #dddddd;
+}
+
+
+
+#input_result {
+	font-size: 1.2em;
+	/*text-align: left;*/
+}
+
+#url_input {
+	width: 20%;
+	padding: .5% .5%;
+	box-sizing: border-box;
+}
+
 #table {
-	font-size: 20;
+	font-size: 1.2em;
 }
 
 .tabs_div {
@@ -21,7 +43,7 @@
 .tabbutton {
 	background-color: var(--button-background);
 	height: 4%;
-	font-size: 18;
+	font-size: 1.35em;
 	border-top-left-radius: 15%;
 	border-top-right-radius: 15%;
 	border: solid var(--tabs-background);
@@ -29,11 +51,14 @@
 	border-bottom: 0px;
 }
 
+#blocked_websites_table {
+	font-size: 1.2em;
+}
+
 #blocked_websites_table *, #blocked_websites_table {
 	border: 4px solid var(--button-background);
 	border-collapse: collapse;
 	text-align: center;
-	font-size: 18px;
 	margin-left: auto;
 	margin-right: auto;
 }
