@@ -1,62 +1,67 @@
-:root {
-	/*--tabs-background: #ec5050;
-	--button-background: #f08080;*/
-	--tabs-background: #bbbbbb;
-	--button-background: #999999;
+body {
+    background-color: #2e3440;
+    margin: 1vw;
+    user-select: none;
 }
 
-/* * {
-	font-size: 16;
-}*/
+* {
+    color: #eceff4;
+    font-size: 2vw;
+}
 
 #block_button {
-	border: none;
-	width: 8%;
-	height: 3%;
-	font-size: 1.2em;
-	border-radius: 5px;
-	background-color: #dddddd;
+    cursor: pointer;
+	border: 0.15vw solid #eceff4;
+	width: 14vw;
+    padding: 0.3vw;
+    margin: 1vw auto;
+	border-radius: 0.37vw;
+	background-color: #434c5e;
 }
 
 
 
 #input_result {
-	font-size: 1.2em;
 	/*text-align: left;*/
 }
 
 #url_input {
-	width: 20%;
+	width: 30%;
+    text-align: center;
 	padding: .5% .5%;
 	box-sizing: border-box;
+    background-color: #3b4252;
+    outline: none;
+    border: 0.15vw solid #eceff4;
+    border-radius: 0.37vw;
 }
 
 #table {
-	font-size: 1.2em;
+	
 }
 
 .tabs_div {
-	border-bottom: solid var(--tabs-background);
 	width: fit-content;
 }
 
 .tabbutton {
-	background-color: var(--button-background);
-	height: 4%;
-	font-size: 1.35em;
-	border-top-left-radius: 15%;
-	border-top-right-radius: 15%;
-	border: solid var(--tabs-background);
-	border-width: 3px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.37vw;
+	height: 2.2vw;
+	border-top-left-radius: 0.37vw;
+	border-top-right-radius: 0.37vw;
+	border: 0.15vw solid #eceff4;
 	border-bottom: 0px;
+    margin-right: 0.37vw;
 }
 
 #blocked_websites_table {
-	font-size: 1.2em;
+
 }
 
 #blocked_websites_table *, #blocked_websites_table {
-	border: 4px solid var(--button-background);
+	border: 0.3vw solid #3b4252;
 	border-collapse: collapse;
 	text-align: center;
 	margin-left: auto;
@@ -64,14 +69,13 @@
 }
 
 .tabbutton.active {
-	background-color: var(--tabs-background);
+	background-color: #3b4252;
 }
 
 .hidden_tab, .visible_tab {
 	/*border: 2px solid #f08080be;*/
 	/*border: solid #f08080;*/
-	border: solid var(--tabs-background);
-	background-color: var(--tabs-background);
+	border: 0.15vw solid #eceff4;
 	text-align: center;
 }
 
