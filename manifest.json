@@ -4,10 +4,10 @@
 	"description": "A simple extension to block certain websites",
 	"manifest_version": 3,
 	"background": {
-		"service_worker": "background.js"
+		"service_worker": "other/background.js"
 	},
 	"action": {
-		"default_popup": "popup.html"
+		"default_popup": "other/popup.html"
 	},
 	"permissions": [
 		"tabs",
