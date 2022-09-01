@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"watch": true,
+		"lib": ["DOM", "ES6"],
+		"types": ["chrome"]
+	},
+	"files": [
+		"other/background.ts",
+		"blocked_websites/script.ts"
+	]
+}

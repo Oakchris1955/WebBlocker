@@ -9,11 +9,11 @@ chrome.tabs.onUpdated.addListener(
 			console.log("Current tab ID: "+tabId);
 			console.log("Current tab URL: "+tab.url);
 			// Format the tab URL so that it only contains the hostname (both and without "www.")
-			let tabDomain = new URL(tab.url);
+			let tabDomain: any = new URL(tab.url);
 			tabDomain = tabDomain.hostname.replace('www.','');
 			// If current tab URL is in blocked_websites...
 			function is_blocked(blocked_websites, tabUrl) {
-				let tabDomain = new URL(tabUrl);
+				let tabDomain: any = new URL(tabUrl);
 				tabDomain = tabDomain.hostname.replace('www.','');
 				return (
 					blocked_websites.includes(tabDomain) || 
@@ -29,7 +29,7 @@ chrome.tabs.onUpdated.addListener(
 				chrome.tabs.remove(tabId)
 				.then(function() {
 					// If Promise didn't return an error, show an notification telling the user what happened
-					let notification_options = {
+					let notification_options: any = {
 						type: "basic",
 						title: "Website blocked",
 						message: `The website ${tab.url} has been blocked by the WebBlocker extension`,

@@ -1,15 +1,15 @@
 let buttons = document.getElementsByTagName('button');
-for (let button of buttons) {
-	if (button.classList.contains("tabbutton")) {
-		button.addEventListener("click", openTab);
+for (let i = 0; i < buttons.length; i++) {
+	if (buttons[i].classList.contains("tabbutton")) {
+		buttons[i].addEventListener("click", openTab);
 	}
-	if (button.id == "block_button") {
-		button.addEventListener("click", blockWebsite);
+	if (buttons[i].id == "block_button") {
+		buttons[i].addEventListener("click", blockWebsite);
 	}
 }
 loadTable();
 
-function showInputResultMessage(msg) {
+function showInputResultMessage(msg: string) {
 	document.getElementById("input_result").innerHTML = msg;
 }
 
@@ -25,7 +25,7 @@ function isValidWebsiteName(website) {
 function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
-		let user_input = document.getElementById("url_input").value;
+		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
 		let blocked_websites = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
@@ -81,7 +81,7 @@ function unblockWebsite(website) {
 	});
 }
 
-function loadTable(_evt) {
+function loadTable() {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
 		if (blocked_websites) { // if array isn't empty, execute the rest of the code
@@ -121,13 +121,13 @@ function openTab(evt) {
 
 	let visible_tabs = document.getElementsByClassName("visible_tab");
 	let button_is_active = evt.target.className.endsWith("active");
-	for (let visible_tab of visible_tabs) {
-		visible_tab.className = "hidden_tab";
+	for (let i = 0; i < visible_tabs.length; i++) {
+		visible_tabs[i].className = "hidden_tab";
 	}
 
 	let tabbuttons = document.getElementsByClassName("tabbutton");
-	for (let tabbutton of tabbuttons) {
-		tabbutton.className = tabbutton.className.replace(" active", "");
+	for (let i = 0; i < tabbuttons.length; i++) {
+		tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
 	}
 
 	if (!button_is_active) {
