@@ -26,7 +26,7 @@ function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
-		let blocked_websites = items.blocked_websites;
+		let blocked_websites: string[] = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
 			if (isValidWebsiteName(user_input)) {
