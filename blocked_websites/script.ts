@@ -99,6 +99,7 @@ function loadTable() {
 				// Create a cell with a small button to unblock the corresponding website
 				let unblock_cell = row.insertCell();
 				let unblock_button = document.createElement("button");
+				unblock_button.classList.add("unblock")
 				unblock_button.innerHTML = "Unblock";
 				unblock_button.addEventListener("click", function() {unblockWebsite(website)});
 				unblock_cell.appendChild(unblock_button);
