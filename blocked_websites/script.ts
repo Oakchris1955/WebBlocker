@@ -1,10 +1,10 @@
-let buttons = document.getElementsByTagName('button');
-for (let i = 0; i < buttons.length; i++) {
-	if (buttons[i].classList.contains("tabbutton")) {
-		buttons[i].addEventListener("click", openTab);
+let divs = document.getElementsByTagName("div");
+for (let i = 0; i < divs.length; i++) {
+	if (divs[i].classList.contains("tabbutton")) {
+		divs[i].addEventListener("click", openTab);
 	}
-	if (buttons[i].id == "block_button") {
-		buttons[i].addEventListener("click", blockWebsite);
+	if (divs[i].id == "block_button") {
+		divs[i].addEventListener("click", blockWebsite);
 	}
 }
 loadTable();
