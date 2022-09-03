@@ -53,16 +53,15 @@ chrome.tabs.onUpdated.addListener(
 	}
 );
 
-chrome.runtime.onStartup.addListener(
+chrome.runtime.onInstalled.addListener(
 	function () {
-		// Initialise the JSON string
-		chrome.storage.local.set(
-			{
-				"blocked_websites": [
-					"google.com",
-					"google.gr",
-					"www.example.com"
-					]
-			});
+		// Read localStorage
+		chrome.storage.local.get("blocked_websites", function(items) {
+		// If "blocked_websites doesn't exit..."
+		if (typeof items.blocked_websites == "undefined") {
+				// ...initialise the JSON string
+				chrome.storage.local.set({"blocked_websites": []});
+			}
+		});
 	}
 );
