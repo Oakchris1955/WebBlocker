@@ -26,10 +26,12 @@ function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
+        console.log(user_input);
 		let blocked_websites: string[] = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
 			if (isValidWebsiteName(user_input)) {
+                console.log(typeof blocked_websites)
 				if (!(blocked_websites.indexOf(user_input) > -1)) {
 					// If not, proceed
 					console.log(`Website to block: ${user_input}`);
@@ -98,7 +100,7 @@ function loadTable() {
 				url_cell.innerHTML = website;
 				// Create a cell with a small button to unblock the corresponding website
 				let unblock_cell = row.insertCell();
-				let unblock_button = document.createElement("button");
+				let unblock_button = document.createElement("div");
 				unblock_button.classList.add("unblock")
 				unblock_button.innerHTML = "Unblock";
 				unblock_button.addEventListener("click", function() {unblockWebsite(website)});
