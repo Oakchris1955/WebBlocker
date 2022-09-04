@@ -26,8 +26,12 @@ function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
+<<<<<<< HEAD
         console.log(user_input);
 		let blocked_websites: string[] = items.blocked_websites;
+=======
+		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
+>>>>>>> refs/remotes/origin/main
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
 			if (isValidWebsiteName(user_input)) {
@@ -69,7 +73,7 @@ function unblockWebsite(website) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Code below obtained from https://stackoverflow.com/a/3954451/
 		// It basically removes "website" from "items" (if it exists)
-		let blocked_websites = items.blocked_websites;
+		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
 		let index = blocked_websites.indexOf(website);
 		if (index != -1) {
 			blocked_websites.splice(index, 1);
