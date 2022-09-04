@@ -20,11 +20,6 @@ body {
 }
 
 
-
-#input_result {
-	/*text-align: left;*/
-}
-
 #url_input {
 	width: 30%;
     text-align: center;
@@ -36,9 +31,6 @@ body {
     border-radius: 0.37vw;
 }
 
-#table {
-	
-}
 
 .tabs_div {
 	width: fit-content;
@@ -56,9 +48,6 @@ body {
     margin-right: 0.37vw;
 }
 
-#blocked_websites_table {
-
-}
 
 #blocked_websites_table *, #blocked_websites_table {
 	border: 0.3vw solid #3b4252;
@@ -73,8 +62,6 @@ body {
 }
 
 .hidden_tab, .visible_tab {
-	/*border: 2px solid #f08080be;*/
-	/*border: solid #f08080;*/
 	border: 0.15vw solid #eceff4;
 	text-align: center;
 }
