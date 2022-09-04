@@ -1,10 +1,10 @@
-let buttons = document.getElementsByTagName('button');
-for (let i = 0; i < buttons.length; i++) {
-	if (buttons[i].classList.contains("tabbutton")) {
-		buttons[i].addEventListener("click", openTab);
+let divs = document.getElementsByTagName("div");
+for (let i = 0; i < divs.length; i++) {
+	if (divs[i].classList.contains("tabbutton")) {
+		divs[i].addEventListener("click", openTab);
 	}
-	if (buttons[i].id == "block_button") {
-		buttons[i].addEventListener("click", blockWebsite);
+	if (divs[i].id == "block_button") {
+		divs[i].addEventListener("click", blockWebsite);
 	}
 }
 loadTable();
@@ -26,11 +26,13 @@ function blockWebsite(_evt) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
-		let blocked_websites = items.blocked_websites;
+        console.log(user_input);
+		let blocked_websites: string[] = items.blocked_websites;
 		// Begin by checking if user_input is empty, then if valid and if already in localStorage
 		if (user_input.length) {
 			if (isValidWebsiteName(user_input)) {
-				if (!blocked_websites.includes(user_input)) {
+                console.log(typeof blocked_websites)
+				if (!(blocked_websites.indexOf(user_input) > -1)) {
 					// If not, proceed
 					console.log(`Website to block: ${user_input}`);
 					// Then, read the "blocked_websites" Array
@@ -67,7 +69,7 @@ function unblockWebsite(website) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Code below obtained from https://stackoverflow.com/a/3954451/
 		// It basically removes "website" from "items" (if it exists)
-		let blocked_websites = items.blocked_websites;
+		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
 		let index = blocked_websites.indexOf(website);
 		if (index != -1) {
 			blocked_websites.splice(index, 1);
@@ -98,7 +100,8 @@ function loadTable() {
 				url_cell.innerHTML = website;
 				// Create a cell with a small button to unblock the corresponding website
 				let unblock_cell = row.insertCell();
-				let unblock_button = document.createElement("button");
+				let unblock_button = document.createElement("div");
+				unblock_button.classList.add("unblock")
 				unblock_button.innerHTML = "Unblock";
 				unblock_button.addEventListener("click", function() {unblockWebsite(website)});
 				unblock_cell.appendChild(unblock_button);
