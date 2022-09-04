@@ -2,7 +2,26 @@
 	<head>
 		<link rel="stylesheet" href="styles.css">
 	</head>
+	<style>
+		body {
+			background-color: #2e3440;
+			user-select: none;
+		}
+		* {
+			color: #eceff4;
+		}
+		#url_button {
+			cursor: pointer;
+			border: 0.15vw solid #eceff4;
+			width: 200px;
+			padding: 5px;
+			font-size: 15;
+			text-align: center;
+			border-radius: 0.37vw;
+			background-color: #434c5e;
+		}
+	</style>
 	<body>
-		<a href="/blocked_websites/index.html" target="_blank"><button>Click me to edit websites list</button></a>
+		<a style="text-decoration: none;" href="/blocked_websites/index.html" target="_blank"><div id="url_button">Edit websites list</div></a>
 	</body>
 </html>
