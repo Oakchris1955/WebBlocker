@@ -56,12 +56,11 @@ chrome.tabs.onUpdated.addListener(
 chrome.runtime.onInstalled.addListener(
 	function () {
 		// Read localStorage
-		chrome.storage.local.get("blocked_websites", function(items) {
-		// If "blocked_websites doesn't exit..."
-		if (typeof items.blocked_websites == "undefined") {
-				// ...initialise the JSON string
-				chrome.storage.local.set({"blocked_websites": []});
-			}
-		});
-	}
-);
+        chrome.storage.local.get("blocked_websites", function(items) {
+            // If "blocked_websites doesn't exit..."
+            if (typeof items.blocked_websites == "undefined") {
+                // ...initialise the JSON string
+                chrome.storage.local.set({"blocked_websites": []});
+            }
+        });
+    })
