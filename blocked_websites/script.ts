@@ -3,7 +3,7 @@ for (let i = 0; i < divs.length; i++) {
 	if (divs[i].classList.contains("tabbutton")) {
 		divs[i].addEventListener("click", openTab);
 	}
-	if (divs[i].id == "block_button") {
+	if (divs[i].id === "block_button") {
 		divs[i].addEventListener("click", blockWebsite);
 	}
 }
@@ -36,7 +36,7 @@ function blockWebsite() {
 					// If not, proceed
 					console.log(`Website to block: ${user_input}`);
 					// Then, read the "blocked_websites" Array
-					if (typeof blocked_websites == "undefined") {
+					if (typeof blocked_websites === "undefined") {
 						// If nothing is defined, make a new Array with the user_input
 						blocked_websites = [user_input]
 					} else {
@@ -69,7 +69,7 @@ function unblockWebsite(website: string) {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Code below obtained from https://stackoverflow.com/a/3954451/
 		// It basically removes "website" from "items" (if it exists)
-		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
+		let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
 		let index = blocked_websites.indexOf(website);
 		if (index != -1) {
 			blocked_websites.splice(index, 1);
@@ -85,7 +85,7 @@ function unblockWebsite(website: string) {
 
 function loadTable() {
 	chrome.storage.local.get("blocked_websites", function(items) {
-		let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
+		let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
 		if (blocked_websites) { // if array isn't empty, execute the rest of the code
 			// Create an empty table
 			let table = document.createElement("table");

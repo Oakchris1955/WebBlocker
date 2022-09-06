@@ -4,7 +4,7 @@ chrome.tabs.onUpdated.addListener(
 		// Load banned websites object from localStorage
 		chrome.storage.local.get("blocked_websites", function(items) {
 			// If items.blocked_websites is undefined, return an empty array
-			let blocked_websites = typeof items.blocked_websites == "undefined" ? [] : items.blocked_websites;
+			let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
 			console.log("Blocked websites: "+blocked_websites);
 			console.log("Current tab ID: "+tabId);
 			console.log("Current tab URL: "+tab.url);
@@ -39,7 +39,7 @@ chrome.tabs.onUpdated.addListener(
 				})
 				// If Promise object has an error, catch it
 				.catch(function(error) {
-					if (error == `Error: No tab with id: ${tabId}.`) {
+					if (error === `Error: No tab with id: ${tabId}.`) {
 						// If failed to remove tab, print the message
 						console.log("Failed to remove tab");
 					} else {
@@ -58,7 +58,7 @@ chrome.runtime.onInstalled.addListener(
 		// Read localStorage
         chrome.storage.local.get("blocked_websites", function(items) {
             // If "blocked_websites doesn't exit..."
-            if (typeof items.blocked_websites == "undefined") {
+            if (typeof items.blocked_websites === "undefined") {
                 // ...initialise the JSON string
                 chrome.storage.local.set({"blocked_websites": []});
             }
