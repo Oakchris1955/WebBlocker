@@ -120,7 +120,7 @@ function loadTable() {
 
 function openTab(evt: Event) {
 	let event_target = (evt.currentTarget as HTMLDivElement);
-	let toshowTabId = event_target.id.slice(7);
+	let toshowTabId = event_target.getAttribute("tabId");
 	let toshowTab = document.getElementById(toshowTabId);
 
 	let visible_tabs = document.getElementsByClassName("visible_tab");
