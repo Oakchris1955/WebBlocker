@@ -13,7 +13,7 @@ function showInputResultMessage(msg: string) {
 	document.getElementById("input_result").innerHTML = msg;
 }
 
-function isValidWebsiteName(website) {
+function isValidWebsiteName(website: string) {
 	// The function returning "true" doesn't mean the domain name entered is 100% correct
 	let domain_array = website.split(".").filter(function(entry) {return entry.trim() != '';});
 	return (
@@ -22,7 +22,7 @@ function isValidWebsiteName(website) {
 	)
 }
 
-function blockWebsite(_evt) {
+function blockWebsite() {
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
@@ -64,7 +64,7 @@ function blockWebsite(_evt) {
 	});
 }
 
-function unblockWebsite(website) {
+function unblockWebsite(website: string) {
 	// Begin by reading the localStorage
 	chrome.storage.local.get("blocked_websites", function(items) {
 		// Code below obtained from https://stackoverflow.com/a/3954451/
@@ -118,12 +118,13 @@ function loadTable() {
 	});
 }
 
-function openTab(evt) {
-	let toshowTabId = evt.target.id.slice(7);
+function openTab(evt: Event) {
+	let event_target = (evt.currentTarget as HTMLDivElement);
+	let toshowTabId = event_target.id.slice(7);
 	let toshowTab = document.getElementById(toshowTabId);
 
 	let visible_tabs = document.getElementsByClassName("visible_tab");
-	let button_is_active = evt.target.className.endsWith("active");
+	let button_is_active = event_target.className.endsWith("active");
 	for (let i = 0; i < visible_tabs.length; i++) {
 		visible_tabs[i].className = "hidden_tab";
 	}
@@ -135,6 +136,6 @@ function openTab(evt) {
 
 	if (!button_is_active) {
 		toshowTab.className = "visible_tab";
-		evt.target.className += " active";
+		event_target.className += " active";
 	}
 }
