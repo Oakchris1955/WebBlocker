@@ -1,3 +1,8 @@
+// Create an interface
+interface Items {
+	blocked_websites?: string[]
+}
+
 let divs = document.getElementsByTagName("div");
 for (let i = 0; i < divs.length; i++) {
 	if (divs[i].classList.contains("tabbutton")) {
@@ -23,40 +28,54 @@ function isValidWebsiteName(website: string) {
 }
 
 function blockWebsite() {
-	chrome.storage.local.get("blocked_websites", function(items) {
+	chrome.storage.local.get("blocked_websites", function(items: Items) {
 		// Begin by getting the user input
 		let user_input = (document.getElementById("url_input") as HTMLInputElement).value;
         console.log(user_input);
-		let blocked_websites: string[] = items.blocked_websites;
-		// Begin by checking if user_input is empty, then if valid and if already in localStorage
-		if (user_input.length) {
-			if (isValidWebsiteName(user_input)) {
-                console.log(typeof blocked_websites)
-				if (!(blocked_websites.indexOf(user_input) > -1)) {
-					// If not, proceed
-					console.log(`Website to block: ${user_input}`);
-					// Then, read the "blocked_websites" Array
-					if (typeof blocked_websites === "undefined") {
-						// If nothing is defined, make a new Array with the user_input
-						blocked_websites = [user_input]
-					} else {
-						// Else, push the user_input to the blocked_websites
-						blocked_websites.push(user_input);
-					}
-					console.log(`New blocked websites: ${blocked_websites}`);
-					// Lastly, save them to localStorage, update the table and show a message
-					chrome.storage.local.set({
-						"blocked_websites": blocked_websites
-					});
-					loadTable();
-					showInputResultMessage(`Website "${user_input}" succesfully blocked`);
-				} else {
-					showInputResultMessage(`Website "${user_input}" is already blocked`);
-				}
+		let blocked_websites_string = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
+		let blocked_websites = blocked_websites_string.map((item) => new URL(item))
+
+		// Try creating a URL object from the input provided
+		try {
+			new URL(user_input);
+		} catch(err) {
+			// If error occured...
+			if (err.name === "TypeError") {
+				// ... and error type is "TypeError", change message on "url_input" and return function
+				showInputResultMessage("Invalid URL entered. Perhaps you forgot a \"http(s)://\"?");
+				return;
 			} else {
-				// Else, print a message
-				console.log("Nothing to block");
-				showInputResultMessage(`Website "${user_input}" is not valid`);
+				// and error type is unexpected, log it, change message on "url_input" and return function
+				console.error(err);
+				showInputResultMessage("An unexpected error has occured. Check the console for more info.");
+				return;
+			}
+		}
+
+		// Begin by checking if user_input is empty and if already in localStorage
+		if (user_input.length) {
+			let tabUrl = new URL(user_input);
+			console.log(typeof blocked_websites)
+			if (!(blocked_websites.indexOf(tabUrl) > -1)) {
+				// If not, proceed
+				console.log(`Website to block: ${tabUrl.href}`);
+				// Then, read the "blocked_websites" Array
+				if (typeof blocked_websites === "undefined") {
+					// If nothing is defined, make a new Array with the tabUrl
+					blocked_websites = [tabUrl]
+				} else {
+					// Else, push the tabUrl to the blocked_websites
+					blocked_websites.push(tabUrl);
+				}
+				console.log(`New blocked websites: ${blocked_websites}`);
+				// Lastly, save them to localStorage, update the table and show a message
+				chrome.storage.local.set({
+					"blocked_websites": blocked_websites.map((item) => item.href)
+				});
+				loadTable();
+				showInputResultMessage(`Website "${tabUrl.href}" succesfully blocked`);
+			} else {
+				showInputResultMessage(`Website "${tabUrl.href}" is already blocked`);
 			}
 		} else {
 			showInputResultMessage(`Expected non-empty user input`);
@@ -64,18 +83,22 @@ function blockWebsite() {
 	});
 }
 
-function unblockWebsite(website: string) {
+function unblockWebsite(website: URL) {
 	// Begin by reading the localStorage
-	chrome.storage.local.get("blocked_websites", function(items) {
+	console.log(`Unblocking ${website.href}`);
+	chrome.storage.local.get("blocked_websites", function(items: Items) {
 		// Code below obtained from https://stackoverflow.com/a/3954451/
 		// It basically removes "website" from "items" (if it exists)
-		let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
-		let index = blocked_websites.indexOf(website);
+		let blocked_websites_string = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
+		//let blocked_websites = blocked_websites_string.map((item) => new URL(item))
+		let index = blocked_websites_string.indexOf(website.href);
+		console.log(website.href)
+		console.log(blocked_websites_string);
 		if (index != -1) {
-			blocked_websites.splice(index, 1);
+			blocked_websites_string.splice(index, 1);
 			// Once removed "website" from "items". save it to localStorage
 			chrome.storage.local.set({
-				"blocked_websites": blocked_websites
+				"blocked_websites": blocked_websites_string
 			});
 			// Lastly, update the table
 			loadTable();
@@ -84,9 +107,12 @@ function unblockWebsite(website: string) {
 }
 
 function loadTable() {
-	chrome.storage.local.get("blocked_websites", function(items) {
-		let blocked_websites = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
+	chrome.storage.local.get("blocked_websites", function(items: Items) {
+		let blocked_websites_string = typeof items.blocked_websites === "undefined" ? [] : items.blocked_websites;
+		console.log(blocked_websites_string);
+		let blocked_websites = blocked_websites_string.map((item) => new URL(item))
 		if (blocked_websites) { // if array isn't empty, execute the rest of the code
+			console.log(blocked_websites[0]);
 			// Create an empty table
 			let table = document.createElement("table");
 			// Edit it's ID
@@ -97,7 +123,7 @@ function loadTable() {
 				let row = table.insertRow();
 				// Create a cell which contains the blocked URL
 				let url_cell = row.insertCell();
-				url_cell.innerHTML = website;
+				url_cell.innerHTML = website.href;
 				// Create a cell with a small button to unblock the corresponding website
 				let unblock_cell = row.insertCell();
 				let unblock_button = document.createElement("div");
